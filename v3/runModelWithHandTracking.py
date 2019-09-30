@@ -15,14 +15,6 @@ model = load_model('v2/resnet1.h5')
 
 detection_graph, sess = detector_utils.load_inference_graph()
 
-def adjust_gamma(image, gamma=1.0):
-
-    invGamma = 1.0 / gamma
-    table = np.array([((i / 255.0) ** invGamma) * 255
-                      for i in np.arange(0, 256)]).astype("uint8")
-
-    return cv2.LUT(image, table)
-
 cap = cv2.VideoCapture(0)
 
 while(cap.isOpened):
