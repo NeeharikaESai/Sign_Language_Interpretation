@@ -17,7 +17,7 @@ sys.path.append("..")
 # score threshold for showing bounding boxes.
 _score_thresh = 0.27
 
-MODEL_NAME = 'v3/handtracking/hand_inference_graph'
+MODEL_NAME = '/home/artistbanda/Documents/Projects/ASL_Interpretation/Sign_Language_Interpretation/v3/handtracking/hand_inference_graph'
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 # List of the strings that is used to add correct label for each box.
@@ -58,6 +58,17 @@ def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, i
             p1 = (int(left), int(top))
             p2 = (int(right), int(bottom))
             cv2.rectangle(image_np, p1, p2, (77, 255, 9), 3, 1)
+
+def get_crop_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np):
+    for i in range(num_hands_detect):
+        if (scores[i] > score_thresh):
+            (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
+                                          boxes[i][0] * im_height, boxes[i][2] * im_height)
+            p1 = (int(left), int(top))
+            p2 = (int(right), int(bottom))
+
+            return image_np[p1[1]:p2[1], p1[0]:p2[0], :]
+        return image_np
 
 
 # Show fps value on image.
