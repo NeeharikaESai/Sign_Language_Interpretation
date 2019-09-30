@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/artistbanda/Documents/Projects/ASL_Interpretation/Sign_Language_Interpretation/v3/handtracking')
+sys.path.insert(0, 'v3/handtracking')
 from utils import detector_utils as detector_utils
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +11,7 @@ from keras.models import load_model
 class_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'space']
 
-model = load_model('/home/artistbanda/Documents/Projects/ASL_Interpretation/Sign_Language_Interpretation/v2/resnet1.h5')
+model = load_model('v2/resnet1.h5')
 
 detection_graph, sess = detector_utils.load_inference_graph()
 
@@ -31,7 +31,7 @@ while(cap.isOpened):
 
     im_width, im_height = (cap.get(3), cap.get(4))
     num_hands_detect = 1
-    score_thresh = 0.5
+    score_thresh = 0.1
 
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
