@@ -11,6 +11,10 @@ from keras.models import load_model
 class_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'space']
 
+def make_1080():
+    cap.set(3, 1920)
+    cap.set(4, 1080)
+
 def draw_label(img, text, pos, bg_color):
     font_face = cv2.FONT_HERSHEY_SIMPLEX
     scale = 2
@@ -31,6 +35,7 @@ model = load_model('v2/resnet1.h5')
 detection_graph, sess = detector_utils.load_inference_graph()
 
 cap = cv2.VideoCapture(0)
+make_1080()
 
 while(cap.isOpened):
     
@@ -56,7 +61,9 @@ while(cap.isOpened):
     predicted = model.predict(crop)
 
     draw_label(frame, class_names[np.argmax(predicted)], (100,100), (0,255,0))
-
+    
+    cv2.namedWindow("frame", cv2.WND_PROP_FULLSCREEN)
+    cv2.setWindowProperty("frame",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
     cv2.imshow('frame', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
