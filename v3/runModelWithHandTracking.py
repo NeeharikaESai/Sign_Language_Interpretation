@@ -11,6 +11,21 @@ from keras.models import load_model
 class_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'space']
 
+def draw_label(img, text, pos, bg_color):
+    font_face = cv2.FONT_HERSHEY_SIMPLEX
+    scale = 2
+    color = (0, 0, 0)
+    thickness = cv2.FILLED
+    margin = 2
+
+    txt_size = cv2.getTextSize(text, font_face, scale, thickness)
+
+    end_x = pos[0] + txt_size[0][0] + margin
+    end_y = pos[1] - txt_size[0][1] - margin
+
+    cv2.rectangle(img, pos, (end_x, end_y), bg_color, thickness)
+    cv2.putText(img, text, pos, font_face, scale, color, 1, cv2.LINE_AA)
+
 model = load_model('v2/resnet1.h5')
 
 detection_graph, sess = detector_utils.load_inference_graph()
@@ -23,7 +38,7 @@ while(cap.isOpened):
 
     im_width, im_height = (cap.get(3), cap.get(4))
     num_hands_detect = 1
-    score_thresh = 0.1
+    score_thresh = 0.5
 
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
@@ -39,7 +54,8 @@ while(cap.isOpened):
     crop = crop / 255
 
     predicted = model.predict(crop)
-    print(class_names[np.argmax(predicted)])
+
+    draw_label(frame, class_names[np.argmax(predicted)], (100,100), (0,255,0))
 
     cv2.imshow('frame', frame)
 
