@@ -7,6 +7,6 @@
  of 250,000 to 500,000 ASL users in the United States. Due to obvious reasons, communities of the disabled are often treated
  poorly. Keeping this is mind, we have created a project based on American Sign Language Interpretation.
 
- The main aim of this project is to track the gestures made by the hand in American Sign Language and translate it into English.
- The entire project has been coded in Python language for its versatality and is open to new ideas and suggestions for 
+ The main aim of this project is to track the gestures made by the hand in American Sign Language and translate it into English language.
+ The entire project has been coded in Python language for its versatility and is open to new ideas and suggestions for 
  researchers and code enthusiasts thereby creating it as an open source project.
